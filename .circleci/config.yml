@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/elixir:1.5
+      - image: circleci/elixir:1.9
     environment:
       - MIX_ENV: test
     working_directory: ~/repo
@@ -15,7 +15,7 @@ jobs:
       - run: mix compile --warnings-as-errors --force
       - run: mix test
       - store_test_results:
-          path: /tmp/imaginary-test-results
+          path: /tmp/imaginary-test-results/
       - run: mix format --check-formatted --dry-run
       - run: mix coveralls.json
       - run: bash <(curl -s https://codecov.io/bash)
