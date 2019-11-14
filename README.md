@@ -1,6 +1,9 @@
 # Imaginary
 
-**TODO: Add description**
+This is still work in progress, and in no way production-ready. This package will be a library to handle media in Cloudinary. For now, take a look at the other packages:
+
+- [Cloudex](https://github.com/smeevil/cloudex)
+- [Cloudinex](https://github.com/veverkap/cloudinex)
 
 ## Installation
 
@@ -18,4 +21,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/imaginary](https://hexdocs.pm/imaginary).
-
