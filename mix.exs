@@ -1,11 +1,18 @@
 defmodule Imaginary.MixProject do
+  @github_url "https://github.com/olaf-cichocki/Imaginary"
   use Mix.Project
 
   def project do
     [
       app: :imaginary,
-      version: "0.1.0",
+      name: "Imaginary",
+      description: description(),
+      version: "0.0.1",
       elixir: "~> 1.6",
+      source_url: @github_url,
+      homepage_url: @github_url,
+      package: package(),
+      files: ~w(mix.exs lib LICENSE.md README.md CHANGELOG.md),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: [
@@ -19,6 +26,21 @@ defmodule Imaginary.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ]
+    ]
+  end
+
+  defp description do
+    """
+    Work In progress - library to handle Cloudinary in Elixir.
+    """
+  end
+
+  defp package do
+    [
+      files: ["lib", "mix.exs", "README.md"],
+      maintainers: ["Olaf Cichocki"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => @github_url, "Docs" => "https://hexdocs.pm/imaginary/"}
     ]
   end
 
