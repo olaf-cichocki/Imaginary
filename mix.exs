@@ -12,7 +12,6 @@ defmodule Imaginary.MixProject do
       source_url: @github_url,
       homepage_url: @github_url,
       package: package(),
-      files: ~w(mix.exs lib LICENSE.md README.md CHANGELOG.md),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: [
@@ -37,7 +36,7 @@ defmodule Imaginary.MixProject do
 
   defp package do
     [
-      files: ["lib", "mix.exs", "README.md"],
+      files: ~w(mix.exs lib LICENSE.md README.md CHANGELOG.md),
       maintainers: ["Olaf Cichocki"],
       licenses: ["MIT"],
       links: %{"GitHub" => @github_url, "Docs" => "https://hexdocs.pm/imaginary/"}
