@@ -33,7 +33,7 @@ jobs:
 
   dialyzer:
     docker:
-      - image: circleci/elixir:1.8.2
+      - image: circleci/elixir:1.9
         environment:
           MIX_ENV: test
     steps:
@@ -48,7 +48,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/elixir:1.8.2
+      - image: circleci/elixir:1.9
     steps:
       - checkout
       - restore_cache:
@@ -58,23 +58,23 @@ jobs:
           path: cover
           destination: coverage_results
 
-  generate_documentation:
-    docker:
-      - image: circleci/elixir:1.8.2
-        environment:
-          MIX_ENV: test
-    steps:
-      - checkout
-      - restore_cache:
-          key: v1-deps-cache-{{ checksum "mix.lock" }}
-      - run: mix docs
-      - store_artifacts:
-          path: doc
-          destination: documentation
+  # generate_documentation:
+  #   docker:
+  #     - image: circleci/elixir:1.9
+  #       environment:
+  #         MIX_ENV: test
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: v1-deps-cache-{{ checksum "mix.lock" }}
+  #     - run: mix do docs
+  #     - store_artifacts:
+  #         path: doc
+  #         destination: documentation
 
   format_check:
     docker:
-      - image: circleci/elixir:1.8.2
+      - image: circleci/elixir:1.9
         environment:
           MIX_ENV: test
     steps:
@@ -89,9 +89,9 @@ workflows:
       - format_check:
           requires:
             - build
-      - generate_documentation:
-          requires:
-            - build
+      # - generate_documentation:
+      #     requires:
+      #       - build
       - dialyzer:
           requires:
             - build
