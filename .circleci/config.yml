@@ -33,7 +33,7 @@ jobs:
 
   dialyzer:
     docker:
-      - image: circleci/elixir:1.9
+      - image: circleci/elixir:1.8.2
         environment:
           MIX_ENV: test
     steps:
@@ -48,7 +48,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/elixir:1.9
+      - image: circleci/elixir:1.8.2
     steps:
       - checkout
       - restore_cache:
@@ -75,7 +75,7 @@ jobs:
 
   format_check:
     docker:
-      - image: circleci/elixir:1.9
+      - image: circleci/elixir:1.8.2
         environment:
           MIX_ENV: test
     steps:
