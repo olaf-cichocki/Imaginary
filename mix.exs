@@ -24,6 +24,9 @@ defmodule Imaginary.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test
+      ],
+      dialyzer: [
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
       ]
     ]
   end
@@ -55,6 +58,7 @@ defmodule Imaginary.MixProject do
     [
       {:ex_doc, "~> 0.21.2", only: :dev, runtime: false},
       {:junit_formatter, "~> 2.1", only: :test},
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false},
       {:credo, "~> 0.8", only: [:dev, :test]},
       {:excoveralls, "~> 0.8", only: :test}
       # {:earmark, "~> 1.4", only: :dev}
