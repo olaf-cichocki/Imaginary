@@ -111,23 +111,23 @@ jobs:
       - checkout
       - run: mix format --check-formatted
 
-  workflows:
-    version: 2
-    build_and_test:
-      jobs:
-        - build
-        - format_check:
-          requires:
-            - build
-        - generate_documentation:
-          requires:
-            - build
-        # - dialyzer:
-        #     requires:
-        #         - build
-        - credo:
-          requires:
-            - build
-        - test:
-          requires:
-            - build
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - format_check:
+        requires:
+          - build
+      - generate_documentation:
+        requires:
+          - build
+      # - dialyzer:
+      #     requires:
+      #         - build
+      - credo:
+        requires:
+          - build
+      - test:
+        requires:
+          - build
