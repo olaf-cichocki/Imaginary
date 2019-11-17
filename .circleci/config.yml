@@ -10,10 +10,10 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - restore_cache:
-          key: v1-deps-cache-{{ checksum "mix.lock" }}
+          key: v2-deps-cache-{{ checksum "mix.lock" }}
       - run: mix do deps.get, deps.compile
       - save_cache:
-          key: v1-deps-cache-{{ checksum "mix.lock" }}
+          key: v2-deps-cache-{{ checksum "mix.lock" }}
           paths:
             - deps
             - ~/.mix
@@ -22,10 +22,10 @@ jobs:
       - run: echo "$OTP_VERSION $ELIXIR_VERSION" > .version_file
       - restore_cache:
           keys:
-            - plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
+            - v2-plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
       - run: mix dialyzer --plt
       - save_cache:
-          key: plt-cache-{{ checksum ".version_file"  }}-{{ checksum "mix.lock" }}
+          key: v2-plt-cache-{{ checksum ".version_file"  }}-{{ checksum "mix.lock" }}
           paths:
             - _build
             - deps
@@ -41,7 +41,7 @@ jobs:
       - run: echo "$OTP_VERSION $ELIXIR_VERSION" > .version_file
       - restore_cache:
           keys:
-            - plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
+            - v2-plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
       - run:
           name: Execute dialyzer
           command: mix dialyzer --halt-exit-status
@@ -52,7 +52,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-deps-cache-{{ checksum "mix.lock" }}
+          key: v2-deps-cache-{{ checksum "mix.lock" }}
       - run: mix coveralls.json
       - store_artifacts:
           path: cover
