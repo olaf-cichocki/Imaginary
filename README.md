@@ -7,17 +7,14 @@ This is still work in progress, and in no way production-ready. This package wil
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `imaginary` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `imaginary` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:imaginary, "~> 0.1.0"}
+    {:imaginary, "~> 0.0.1"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/imaginary](https://hexdocs.pm/imaginary).
+The docs can be found at [https://hexdocs.pm/imaginary](https://hexdocs.pm/imaginary).
