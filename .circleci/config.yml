@@ -26,7 +26,7 @@ jobs:
     docker:
       - image: circleci/elixir:1.9
     environment:
-      - MIX_ENV: test
+      MIX_ENV: test
     steps:
       - checkout
       - run: mix local.hex --force
@@ -66,68 +66,68 @@ jobs:
         destination: coverage_results
       - run: curl -s https://codecov.io/bash | bash
 
-generate_documentation:
-  docker:
-    - image: circleci/elixir:1.9
+  generate_documentation:
+    docker:
+      - image: circleci/elixir:1.9
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - restore_cache:
+        key: deps-cache-{{ checksum "mix.lock" }}
+      - run: mix docs
+      - store_artifacts:
+        path: doc
+        destination: documentation
+
+    credo:
+      docker:
+        - image: circleci/elixir:1.9
       environment:
         - MIX_ENV: test
-  steps:
-    - checkout
-    - restore_cache:
-      key: deps-cache-{{ checksum "mix.lock" }}
-    - run: mix docs
-    - store_artifacts:
-      path: doc
-      destination: documentation
+      steps:
+        - checkout
+        - run: mix credo
 
-  credo:
+    # dialyzer:
+    #   docker:
+    #   - image: circleci/elixir:1.9
+    #       environment:
+    #       MIX_ENV: test
+    #   steps:
+    #   - checkout
+    #   - run: echo "$OTP_VERSION $ELIXIR_VERSION" > .version_file
+    #   - restore_cache:
+    #       keys:
+    #           - plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
+    #   - run: mix dialyzer --halt-exit-status
+
+  format_check:
     docker:
       - image: circleci/elixir:1.9
     environment:
-      - MIX_ENV: test
+      MIX_ENV: test
     steps:
       - checkout
-      - run: mix credo
+      - run: mix format --check-formatted
 
-  # dialyzer:
-  #   docker:
-  #   - image: circleci/elixir:1.9
-  #       environment:
-  #       MIX_ENV: test
-  #   steps:
-  #   - checkout
-  #   - run: echo "$OTP_VERSION $ELIXIR_VERSION" > .version_file
-  #   - restore_cache:
-  #       keys:
-  #           - plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
-  #   - run: mix dialyzer --halt-exit-status
-
-format_check:
-  docker:
-    - image: circleci/elixir:1.9
-  environment:
-    - MIX_ENV: test
-  steps:
-    - checkout
-    - run: mix format --check-formatted
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
-      - format_check:
-        requires:
-          - build
-      - generate_documentation:
-        requires:
-          - build
-      # - dialyzer:
-      #     requires:
-      #         - build
-      - credo:
-        requires:
-          - build
-      - test:
-        requires:
-          - build
+  workflows:
+    version: 2
+    build_and_test:
+      jobs:
+        - build
+        - format_check:
+          requires:
+            - build
+        - generate_documentation:
+          requires:
+            - build
+        # - dialyzer:
+        #     requires:
+        #         - build
+        - credo:
+          requires:
+            - build
+        - test:
+          requires:
+            - build
