@@ -5,13 +5,10 @@ jobs:
       - image: circleci/elixir:1.8.2
         environment:
           MIX_ENV: test
-
     steps:
       - checkout
-
       - run: mix local.hex --force
       - run: mix local.rebar --force
-
       - restore_cache:
           key: v1-deps-cache-{{ checksum "mix.lock" }}
       - run: mix do deps.get, deps.compile
@@ -21,9 +18,7 @@ jobs:
             - deps
             - ~/.mix
             - _build
-
       - run: mix compile
-
       - run: echo "$OTP_VERSION $ELIXIR_VERSION" > .version_file
       - restore_cache:
           keys:
@@ -41,7 +36,6 @@ jobs:
       - image: circleci/elixir:1.8.2
         environment:
           MIX_ENV: test
-
     steps:
       - checkout
       - run: echo "$OTP_VERSION $ELIXIR_VERSION" > .version_file
@@ -55,13 +49,11 @@ jobs:
   test:
     docker:
       - image: circleci/elixir:1.8.2
-
     steps:
       - checkout
       - restore_cache:
           key: v1-deps-cache-{{ checksum "mix.lock" }}
       - run: mix coveralls.html
-
       - store_artifacts:
           path: cover
           destination: coverage_results
@@ -71,13 +63,11 @@ jobs:
       - image: circleci/elixir:1.8.2
         environment:
           MIX_ENV: test
-
     steps:
       - checkout
       - restore_cache:
           key: v1-deps-cache-{{ checksum "mix.lock" }}
       - run: mix docs
-
       - store_artifacts:
           path: doc
           destination: documentation
@@ -87,10 +77,8 @@ jobs:
       - image: circleci/elixir:1.8.2
         environment:
           MIX_ENV: test
-
     steps:
       - checkout
-
       - run: mix format --check-formatted
 
 workflows:
