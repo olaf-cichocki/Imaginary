@@ -53,6 +53,8 @@ jobs:
           MIX_ENV: test
     steps:
       - checkout
+      - restore_cache:
+          key: v2-deps-cache-{{ checksum "mix.lock" }}
       - run: mix credo
 
   test:
