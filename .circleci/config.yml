@@ -25,33 +25,33 @@ jobs:
   build:
     docker:
     - image: circleci/elixir:1.9
-        environment:
-        MIX_ENV: test
+    environment:
+      - MIX_ENV: test
     steps:
     - checkout
     - run: mix local.hex --force
     - run: mix local.rebar --force
     - restore_cache:
-        key: deps-cache-{{ checksum "mix.lock" }}
+      key: deps-cache-{{ checksum "mix.lock" }}
     - run: mix do deps.get, deps.compile
     - save_cache:
-        key: deps-cache-{{ checksum "mix.lock" }}
-        paths:
-            - deps
-            - ~/.mix
-            - _build
+      key: deps-cache-{{ checksum "mix.lock" }}
+      paths:
+        - deps
+        - ~/.mix
+        - _build
     - run: mix compile
     - run: echo "$OTP_VERSION $ELIXIR_VERSION" > .version_file
     - restore_cache:
-        keys:
-            - plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
+      keys:
+      - plt-cache-{{ checksum ".version_file" }}-{{ checksum "mix.lock" }}
     - run: mix dialyzer --plt
     - save_cache:
-        key: plt-cache-{{ checksum ".version_file"  }}-{{ checksum "mix.lock" }}
-        paths:
-            - _build
-            - deps
-            - ~/.mix
+      key: plt-cache-{{ checksum ".version_file"  }}-{{ checksum "mix.lock" }}
+      paths:
+        - _build
+        - deps
+        - ~/.mix
 
   test:
     docker:
@@ -59,18 +59,18 @@ jobs:
     steps:
     - checkout
     - restore_cache:
-        key: deps-cache-{{ checksum "mix.lock" }}
+      key: deps-cache-{{ checksum "mix.lock" }}
     - run: mix coveralls.json
     - store_artifacts:
-        path: cover
-        destination: coverage_results
+      path: cover
+      destination: coverage_results
     - run: curl -s https://codecov.io/bash | bash
 
 generate_documentation:
     docker:
     - image: circleci/elixir:1.9
-        environment:
-        MIX_ENV: test
+      environment:
+      - MIX_ENV: test
     steps:
     - checkout
     - restore_cache:
@@ -83,8 +83,8 @@ generate_documentation:
   credo:
     docker:
     - image: circleci/elixir:1.9
-        environment:
-        MIX_ENV: test
+    environment:
+      - MIX_ENV: test
     steps:
     - checkout
     - run: mix credo
@@ -105,8 +105,8 @@ generate_documentation:
 format_check:
     docker:
     - image: circleci/elixir:1.9
-        environment:
-        MIX_ENV: test
+    environment:
+      - MIX_ENV: test
     steps:
     - checkout
     - run: mix format --check-formatted
@@ -117,17 +117,17 @@ workflows:
     jobs:
     - build
     - format_check:
-        requires:
-            - build
+      requires:
+        - build
     - generate_documentation:
-        requires:
-            - build
+      requires:
+        - build
     # - dialyzer:
     #     requires:
     #         - build
     - credo:
-        requires:
-            - build
+      requires:
+        - build
     - test:
-        requires:
-            - build
+      requires:
+        - build
