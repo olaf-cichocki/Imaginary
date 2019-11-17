@@ -57,8 +57,8 @@ defmodule Imaginary.MixProject do
   defp deps do
     [
       {:junit_formatter, "~> 2.1", only: :test},
-      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
-      {:credo, "~> 0.9", only: [:dev, :test]},
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.1", only: [:dev, :test]},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:excoveralls, "~> 0.12", only: :test}
       # {:earmark, "~> 1.4", only: :dev}
