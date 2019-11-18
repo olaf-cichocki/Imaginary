@@ -25,3 +25,6 @@ imaginary-*.tar
 # Ignore dialyzer files
 /priv/plts/*.plt
 /priv/plts/*.plt.hash
+
+# MacOS files
+.DS_Store
