@@ -1,0 +1,16 @@
+# config->tag->responsive;
+# config->tag->responsive_class;
+# config->tag->responsive_use_breakpoints;
+# config->tag->responsive_width;
+# config->tag->responsive_placeholder;
+# config->tag->responsive_min_width;
+# config->tag->responsive_max_width;
+# config->tag->responsive_bytes_step;
+# config->tag->responsive_max_images;
+# config->tag->responsive_transformation;
+# config->tag->responsive_use_cache;
+# config->tag->responsive_fetch_missing;
+# config->tag->responsive_cache_adapter;
+# config->tag->hi_dpi;
+# config->tag->client_hints;
+# config->tag->round_dpr;
