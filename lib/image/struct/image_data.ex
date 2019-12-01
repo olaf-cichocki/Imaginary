@@ -5,11 +5,10 @@ defmodule ImageData do
 
   # @enforce_keys [:id]
   # defstruct [:id, transformations: []]
-  defstruct [:id, :base, :options, transformations: []]
+  defstruct [:id, :options, transformations: []]
 
-  @type t() :: %__MODULE__{
+  @type asset() :: %__MODULE__{
           id: String.t(),
-          base: String.t(),
           transformations: list(String),
           options: %CldConfig{}
         }

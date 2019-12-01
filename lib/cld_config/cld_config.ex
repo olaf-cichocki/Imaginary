@@ -2,6 +2,15 @@ defmodule CldConfig do
   @moduledoc """
   Global Cloudinary config.
   """
-  defstruct [:account, :url, :api, :tag]
-  @type t() :: %__MODULE__{account: %CldAccountConfig{}, url: %CldUrlConfig{}}
+  defstruct account: %CldAccount{}
+  # url: %CldUrl{},
+  # api: %CldApi{},
+  # tag: %CldTag{}
+
+  @type cldConfig() :: %__MODULE__{
+          account: CldAccount.config()
+          # url: %CldUrl{},
+          # api: %CldApi{},
+          # tag: %CldTag{}
+        }
 end

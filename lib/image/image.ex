@@ -4,7 +4,8 @@ defmodule Imaginary.Image do
 
   ## Examples
 
-      iex> Imaginary.Image.id("sample.jpg") |> Imaginary.Image.to_url()
+      iex> Imaginary.Image.id("sample.jpg", %CldConfig{ account: %CldAccount{ cloud_name: "demo" }}) 
+      ...>   |> Imaginary.Image.to_url()
       "https://res.cloudinary.com/demo/image/upload/sample.jpg"
   """
 
@@ -13,13 +14,15 @@ defmodule Imaginary.Image do
 
   ## Examples
 
-  iex> Imaginary.Image.id('sample-image.jpg')
-  %ImageData{id: 'sample-image.jpg'}
-
+      iex> Imaginary.Image.id('sample-image.jpg')
+      %ImageData{id: 'sample-image.jpg', options: %CldConfig{}}
 
   """
-  @spec id(String.t(), options?: %CldConfig{}) :: %ImageData{id: String.t()}
-  def id(id, options \\ nil) do
+  @spec id(id: String.t(), options?: %CldConfig{}) :: %ImageData{
+          id: String.t(),
+          options: %CldConfig{}
+        }
+  def id(id, options \\ %CldConfig{}) do
     %ImageData{id: id, options: options}
   end
 
@@ -28,9 +31,9 @@ defmodule Imaginary.Image do
   """
   @spec to_url(%ImageData{}) :: String.t()
   def to_url(%{id: id, options: options} = _asset) do
-    # %{account: account} = options
+    %CldConfig{account: account} = options
 
     "https://res.cloudinary.com/" <>
-      "demo" <> "/image/upload/" <> id
+      account.cloud_name <> "/image/upload/" <> id
   end
 end

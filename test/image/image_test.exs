@@ -4,7 +4,7 @@ defmodule Imaginary.ImageTest do
   doctest Imaginary.Image
 
   @config %CldConfig{
-    account: %CldAccountConfig{cloud_name: "demo"}
+    account: %CldAccount{cloud_name: "demo"}
   }
   @image_struct %ImageData{id: "sample.jpg", transformations: [], options: @config}
 
@@ -14,7 +14,7 @@ defmodule Imaginary.ImageTest do
     assert Image.id("sample.jpg") === %ImageData{
              id: "sample.jpg",
              transformations: [],
-             options: nil
+             options: %CldConfig{}
            }
   end
 

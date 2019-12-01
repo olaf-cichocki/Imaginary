@@ -1,6 +1,18 @@
-defmodule CldAccountConfig do
+defmodule CldAccount do
   @moduledoc """
-  Account Cloudinary config.
+  Cloudinary config for account.
   """
-  defstruct [:cloud_name, :api_key, :api_secret, :auth_key, :auth_ip, :auth_acl]
+  defstruct [
+    :cloud_name
+    # unused:
+    # :api_key,
+    # :api_secret,
+    # :auth_key,
+    # :auth_ip,
+    # :auth_acl
+  ]
+
+  @type config() :: %__MODULE__{
+          cloud_name: String.t()
+        }
 end

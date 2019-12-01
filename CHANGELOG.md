@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Basic url creation
+
 ### Added
 
 - Basic ExDoc configuration
