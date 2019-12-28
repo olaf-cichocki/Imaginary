@@ -1,6 +1,6 @@
 defmodule CldConfig do
   @moduledoc """
-  Global Cloudinary config.
+  Cloudinary config.
   """
   defstruct account: %CldAccount{}
   # url: %CldUrl{},

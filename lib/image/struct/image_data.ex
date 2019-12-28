@@ -3,13 +3,11 @@ defmodule ImageData do
   A struct representing image asset.
   """
 
-  # @enforce_keys [:id]
-  # defstruct [:id, transformations: []]
   defstruct [:id, :options, transformations: []]
 
-  @type asset() :: %__MODULE__{
+  @type t() :: %__MODULE__{
           id: String.t(),
-          transformations: list(String),
-          options: %CldConfig{}
+          transformations: list(String.t()),
+          options: CldConfig.config()
         }
 end
