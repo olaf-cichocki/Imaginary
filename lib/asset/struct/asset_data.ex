@@ -1,4 +1,4 @@
-defmodule ImageData do
+defmodule AssetData do
   @moduledoc """
   A struct representing image asset.
   """

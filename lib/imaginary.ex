@@ -1,5 +1,3 @@
 defmodule Imaginary do
-  @moduledoc """
-    Imaginary.
-  """
+  @moduledoc false
 end
