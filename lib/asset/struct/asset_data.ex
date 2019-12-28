@@ -6,8 +6,8 @@ defmodule AssetData do
   defstruct [:id, :options, transformations: []]
 
   @type t() :: %__MODULE__{
-          id: String.t(),
+          id: String.t() | nil,
           transformations: list(String.t()),
-          options: CldConfig.config()
+          options: CldConfig.t()
         }
 end

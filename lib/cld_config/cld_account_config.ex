@@ -21,7 +21,7 @@ defmodule CldAccount do
   * `:api_key`: needed for secure API calls to Cloudinary (e.g., image and video uploads).
   * `:api_secret`: needed for secure API calls to Cloudinary (e.g., image and video uploads).
   """
-  @type config() :: %__MODULE__{
+  @type t() :: %__MODULE__{
           cloud_name: String.t() | nil,
           api_key: String.t() | nil,
           api_secret: String.t() | nil

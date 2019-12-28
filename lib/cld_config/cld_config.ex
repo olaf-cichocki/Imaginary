@@ -7,8 +7,8 @@ defmodule CldConfig do
   # api: %CldApi{},
   # tag: %CldTag{}
 
-  @type cldConfig() :: %__MODULE__{
-          account: CldAccount.config()
+  @type t() :: %__MODULE__{
+          account: CldAccount.t()
           # url: %CldUrl{},
           # api: %CldApi{},
           # tag: %CldTag{}

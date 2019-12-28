@@ -34,7 +34,7 @@ defmodule Imaginary.Asset do
   @doc """
   Accepts options, creates necessary data structure. Some options cen be set using env variables.
   """
-  @spec base(CldConfig.config()) :: AssetData.t()
+  @spec base(CldConfig.t()) :: AssetData.t()
   def base(options \\ %CldConfig{}) do
     %AssetData{options: options}
   end
