@@ -7,7 +7,7 @@ defmodule Imaginary.MixProject do
       app: :imaginary,
       name: "Imaginary",
       description: description(),
-      version: "0.0.1",
+      version: "0.0.2",
       elixir: "~> 1.6",
       source_url: @github_url,
       homepage_url: @github_url,
