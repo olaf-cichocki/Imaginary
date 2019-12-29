@@ -1,6 +1,7 @@
 defmodule Imaginary.Asset do
   @type size :: integer | float | String.t()
   @default_base_url "//res.cloudinary.com"
+  @default_config %CldConfig{}
 
   @moduledoc """
   Url module helps manipulating creating urls to cloudinary assets, and can optionally transform the assets as well.
@@ -35,7 +36,7 @@ defmodule Imaginary.Asset do
   Accepts options, creates necessary data structure. Some options cen be set using env variables.
   """
   @spec base(CldConfig.t()) :: AssetData.t()
-  def base(options \\ %CldConfig{}) do
+  def base(options \\ @default_config) do
     %AssetData{options: options}
   end
 
