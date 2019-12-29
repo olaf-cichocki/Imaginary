@@ -29,16 +29,16 @@ defmodule Imaginary.AssetTest do
 
   test "with() sets width" do
     assert @final_image_struct |> Asset.width(350) |> Asset.to_url() ===
-             "//res.cloudinary.com/demo/image/upload/w_350/sample.jpg"
+             {:ok, "//res.cloudinary.com/demo/image/upload/w_350/sample.jpg"}
   end
 
   test "height() sets width" do
     assert @final_image_struct |> Asset.height(750) |> Asset.to_url() ===
-             "//res.cloudinary.com/demo/image/upload/h_750/sample.jpg"
+             {:ok, "//res.cloudinary.com/demo/image/upload/h_750/sample.jpg"}
   end
 
   test "to_url() creates url" do
     assert @final_image_struct |> Asset.to_url() ===
-             "//res.cloudinary.com/demo/image/upload/sample.jpg"
+             {:ok, "//res.cloudinary.com/demo/image/upload/sample.jpg"}
   end
 end

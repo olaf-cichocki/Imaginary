@@ -15,12 +15,12 @@ defmodule Imaginary.Asset do
       iex> Asset.base(%CldConfig{ account: %CldAccount{ cloud_name: "demo" }}) 
       ...> |> Asset.id("sample.jpg") 
       ...> |> Asset.to_url()
-      "//res.cloudinary.com/demo/image/upload/sample.jpg"
+      {:ok, "//res.cloudinary.com/demo/image/upload/sample.jpg"}
 
   You can provide necesary struct directly if you really want
       iex> %AssetData{id: "sample.jpg", options: %CldConfig{ account: %CldAccount{ cloud_name: "demo" }}}
       ...> |> Imaginary.Asset.to_url()
-      "//res.cloudinary.com/demo/image/upload/sample.jpg"
+      {:ok, "//res.cloudinary.com/demo/image/upload/sample.jpg"}
 
   ## Advanced Examples
       iex> alias Imaginary.Asset
@@ -29,44 +29,33 @@ defmodule Imaginary.Asset do
       ...> |> Asset.height(600) 
       ...> |> Asset.id("sample-image.jpg") 
       ...> |> Asset.to_url()
-      "//res.cloudinary.com/demo-cloud/image/upload/w_300/h_600/sample-image.jpg"
+      {:ok, "//res.cloudinary.com/demo-cloud/image/upload/w_300/h_600/sample-image.jpg"}
   """
+
+  ######################
+  ### BASIC CREATION ###
+  ######################
+
+  @doc """
+  Creates necessary data structure. Uses only options set using env variables.
+  """
+  @spec base() :: AssetData.t()
+  def base() do
+    %AssetData{options: @default_config}
+  end
 
   @doc """
   Accepts options, creates necessary data structure. Some options cen be set using env variables.
   """
   @spec base(CldConfig.t()) :: AssetData.t()
-  def base(options \\ @default_config) do
+  def base(options) do
+    # TODO: Merge options
     %AssetData{options: options}
   end
 
-  @doc """
-  Add asset id.
-  """
-  @spec id(AssetData.t(), String.t()) :: AssetData.t()
-  def id(image_data, id) do
-    %AssetData{image_data | id: id}
-  end
-
-  @doc """
-  Converts asset id and all the transformation to the resulting url
-  """
-  @spec to_url(AssetData.t()) :: String.t()
-  def to_url(%AssetData{id: id, transformations: transformations, options: options} = _asset) do
-    %CldConfig{account: account} = options
-
-    transformation_string = transformations |> join_transformations
-
-    [
-      @default_base_url,
-      account.cloud_name,
-      "image/upload",
-      transformation_string,
-      id
-    ]
-    |> Enum.filter(fn value -> value !== "" end)
-    |> Enum.join("/")
-  end
+  ######################
+  ## TRANSFORMATIONS ##
+  ######################
 
   @doc """
   Set width of the image. [Official API Reference](https://cloudinary.com/documentation/image_transformation_reference#width_parameter){:target="_blank"}
@@ -91,5 +80,54 @@ defmodule Imaginary.Asset do
     end)
   end
 
+  @doc """
+  Add asset id.
+  """
+  @spec id(AssetData.t(), String.t()) :: AssetData.t()
+  def id(image_data, id) do
+    %AssetData{image_data | id: id}
+  end
+
+  ######################
+  #### URL BUILDING ####
+  ######################
+
+  @doc """
+  Converts asset id and all the transformation to the resulting url
+  """
+  @spec to_url(AssetData.t()) :: {:ok, String.t()}
+  def to_url(%AssetData{id: id, transformations: transformations, options: options} = _asset) do
+    %CldConfig{account: account} = options
+
+    transformation_string = transformations |> join_transformations
+
+    build_url(
+      account.cloud_name,
+      transformation_string,
+      id
+    )
+  end
+
+  @spec join_transformations(list(String.t())) :: String.t()
   defp join_transformations(transformations), do: Enum.reverse(transformations) |> Enum.join("/")
+
+  defp build_url(_cloud_name, _transformations, id) when is_nil(id), do: {:error, "Missing :id"}
+
+  defp build_url(cloud_name, _transformations, _id) when is_nil(cloud_name),
+    do: {:error, "Missing :cloud_name"}
+
+  defp build_url(cloud_name, transformations, id) do
+    url =
+      [
+        @default_base_url,
+        cloud_name,
+        "image/upload",
+        transformations,
+        id
+      ]
+      |> Enum.filter(fn value -> value !== "" end)
+      |> Enum.join("/")
+
+    {:ok, url}
+  end
 end
